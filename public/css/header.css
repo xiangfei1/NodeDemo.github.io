@@ -1,0 +1,57 @@
+.navbar {
+    position: relative;
+}
+/* .mr-sm-2 {
+    margin-right: 0;
+} */
+
+#navbarSupportedContent .nav-item .nav-link {
+    color: #ccc;
+} 
+#navbarSupportedContent .nav-item a:hover {
+    color: #fff;
+}
+
+.nav-item-img {
+    width: 35px;
+    height: 35px;
+    padding: 5px 5px;
+}
+.login {
+    position: absolute;
+    bottom: -65px;
+    width: 200px;
+    height: 80px;
+    background-color: #fff;
+    box-shadow: 0px 5px 10px #ccc;
+    left: 310px;
+    display: none;
+}
+.login ul {
+    list-style: none;
+    padding: 0;
+    font-size: 14px;
+}
+.login ul li {
+    padding-top: 5px;
+    border-top: 1px solid #ccc;
+}
+.login ul li a {
+    text-decoration: none;
+    display: inline-block;
+    width: 200px;
+}
+.login ul li:nth-child(1) {
+    border: 0;
+}
+.login ul li:hover {
+    background-color: #ccc;
+}
+
+#navbarSupportedContent .nav-item {
+    text-align: center;
+    vertical-align: middle;
+}
+#navbarSupportedContent .nav-item .btn {
+    font-size: 14px;
+}

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>个人信息</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/bootstrap/dist/css/bootstrap.css"
+    />
+    <link rel="stylesheet" href="/public/css/userinfo.css" />
+  </head>
+  <body>
+    <%- include('./_partial/header.ejs') -%>
+    <div class="topBackground">
+      <img src="/public/img/topback.jpg" alt="背景" />
+    </div>
+    <% if(user){ %>
+    <div class="user_img">
+      <img src="<%=user.avatar%>" alt="" id="userAvatar" />
+    </div>
+    <hr style="margin-top: 60px;background-color: #fff;height: 5px;" />
+    <form id="formUser">
+      <div class="form_div">
+        <div class="form-user-input">
+          <label for="name">用户名</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            value="<%=user.name%>"
+            maxlength="12"
+          />
+        </div>
+        <div class="form-user-input">
+          <label for="email">邮箱</label>
+          <input
+            type="text"
+            value="<%=user.email%>"
+            name="email"
+            id="email"
+            readonly
+          />
+        </div>
+        <div class="form-user-input">
+          <label for="password">密码</label>
+          <input
+            type="text"
+            name="password"
+            value="<%=user.password%>"
+            id="password"
+            maxlength="12"
+          />
+        </div>
+      </div>
+      <button type="submit">提交修改</button>
+    </form>
+    <%}%>
+    <div class="bottom">
+      感谢您的光临
+    </div>
+    <!-- 修改头像 -->
+    <div class="updateAvatar">
+      <form id="formAvatar">
+        <div class="form-avatar">
+          <label for="avatar">请选择你的头像</label>
+          <input type="file" id="avatar" name="avatar" />
+          <div class="avatar-button">
+            <button type="submit">提交</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <script src="/node_modules/jquery/dist/jquery.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script>
+      $('#userAvatar').click(e => {
+        e.stopPropagation()
+        $('.updateAvatar').slideToggle()
+      })
+      $(document).scroll(() => {
+        $('.updateAvatar').slideUp()
+      })
+      $('#formUser').on('submit', function(e) {
+        e.preventDefault()
+        let formData = $(this).serialize()
+        $.ajax({
+          data: formData,
+          dataType: 'json',
+          type: 'post',
+          url: '/updateUserInfo',
+          success: result => {
+            if (result.err_code == 500) {
+              window.alert(result.message)
+            }
+            if (result.err_code == 0) {
+              window.alert(result.message)
+              window.location.href = '/userinfo'
+            }
+          }
+        })
+      })
+      $('#formAvatar').on('submit', function(e) {
+        e.preventDefault()
+        let form = new FormData($(this).get(0))
+        // console.log(form.get('avatar').name)
+        if (form.get('avatar').name == '') {
+          window.alert('不可以提交空的头像哦')
+        }
+        let formData = {
+          avatar: form.get('avatar').name
+        }
+        $.ajax({
+          data: formData,
+          type: 'post',
+          dataType: 'json',
+          url: '/updateUserAvatar',
+          success: result => {
+            if(result.err_code == 500) {
+              window.alert(result.message)
+            } else {
+              window.alert(result.message)
+              window.location.href = '/userinfo'
+            }
+          }
+        })
+      })
+    </script>
+  </body>
+</html>

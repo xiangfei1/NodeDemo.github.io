@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>登录</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/bootstrap/dist/css/bootstrap.css"
+    />
+    <link rel="stylesheet" href="/public/css/login.css" />
+  </head>
+  <body>
+    <form id="formL" action="" class="form-login">
+      <p class="title">登录</p>
+      <div class="form-login-input">
+        <input
+          type="email"
+          placeholder="Email address"
+          name="email"
+          id="email"
+        />
+      </div>
+      <div class="form-login-input">
+        <input
+          type="password"
+          placeholder="Password"
+          name="password"
+          id="password"
+        />
+      </div>
+      <p>
+        什么？还没账号？那赶紧去<a href="/register">注册</a>吧！返回<a href="/"
+          >主页</a
+        >
+      </p>
+      <button type="submit" class="btn btn-primary btn-lg btn-block">
+        登录
+      </button>
+    </form>
+    <script src="/node_modules/jquery/dist/jquery.js"></script>
+    <script>
+      $('#formL').on('submit', function(e) {
+        e.preventDefault()
+        let formData = $(this).serialize()
+        if ($('#email').val() == '' || $('#password').val() == '') {
+          window.alert('不能为空')
+        } else {
+          $.ajax({
+            url: '/login',
+            data: formData,
+            type: 'post',
+            dataType: 'json',
+            success: result => {
+              if(result.err_code == 500) {
+                window.alert('服务器出错')
+              } else if(result.err_code == 1) {
+                window.alert(result.message)
+              } else {
+                window.alert(result.message)
+                window.location.href = '/'
+              }
+            }
+          })
+        }
+      })
+    </script>
+  </body>
+</html>

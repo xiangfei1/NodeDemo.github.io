@@ -1,0 +1,11 @@
+.footer {
+    background: #fff;
+    position: absolute;
+    width: 100%;
+    border-top: 1px solid #E1E1E1;
+}
+
+.footer img {
+    height: 50%;
+    width: 80%;
+}

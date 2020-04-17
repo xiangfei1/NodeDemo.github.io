@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="/node_modules/bootstrap/dist/css/bootstrap.css"
+    />
+    <link rel="stylesheet" href="/public/css/search.css" />
+  </head>
+  <body>
+    <%- include('./_partial/header.ejs') -%>
+    <section class="container">
+      <div class="row">
+    <% for(let i=0;i<info.length;i++){ %> 
+        <div class="col-sm-6 col-md-4">
+          <div class="thumbnail row-style">
+            <div class="caption">
+              <a href="#" role="p" class="title"
+                ><%=info[i].content%></a
+              >
+              <div id="constraint-img" style="width: 120px;height: 120px;"><img src="<%=info[i].img%>" alt="..." /></div>
+              <span class="rank"><%=info[i].rank%></span><br />
+              <p>回复数：<span style="color: blue;"><%=info[i].count_repl%></span></p>
+              <p>访问数：<span style="color: red;"><%=info[i].count_visits%></span></p>
+            </div>
+          </div>
+        </div>
+    <% } %> 
+      </div>
+      <nav aria-label="Page navigation">
+            <ul class="pagination">
+            <% if(page > 1){ %> 
+              <li>
+                <a href="/search?content=<%=result%>&page=<%=page-1%>&limit=6" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+            <% } %> 
+            <% for(let i=0;i<totalPage;i++){ %> 
+                <% if(i<=8){ %> 
+                <li><a href="/search?content=<%=result%>&page=<%=i+1%>&limit=6"><%=i+1%></a></li>
+                <% } %> 
+            <% } %> 
+              <li><a href="#" id="getPage">...</a></li>
+            <% if(page < totalPage){ %> 
+              <li>
+                <a href="/search?content=<%=result%>&page=<%=page+1%>&limit=6" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            <% } %> 
+            </ul>
+            <ul class="pagination getPage" style="margin-top: -15px; display: none;">
+                <% for(let i=0;i<totalPage;i++){ %>
+                  <li><a href="/search?content=<%=result%>?page=<%=(i+1)%>&limit=6"><%=i+1 %></a></li>
+                <% } %>
+            </ul>
+          </nav>
+    </section>
+    <div class="bottom">
+            感谢您的光临
+    </div>
+    <script src="/node_modules/jquery/dist/jquery.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script>
+        $('#getPage').click(e=>{
+            e.preventDefault()
+            $('.getPage').fadeToggle()
+        })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,216 @@
+<section class="container">
+  <!-- 主体内容 -->
+  <div class="content">
+    <div class="content-panel">
+      <!-- 导航栏 -->
+      <div class="header" id="header">
+        <a href="/" class="topic-tab">全部</a>
+        <a href="/good" class="topic-tab">精华</a>
+        <a href="/share" class="topic-tab">分享</a>
+        <a href="/ask" class="topic-tab">问答</a>
+        <a href="/job" class="topic-tab">招聘</a>
+      </div>
+      <!-- 数据列表 -->
+      <div class="inner no-padding">
+        <div id="topic-list">
+          <%for(let i=0;i<info.length;i++){%>
+              <div class="cell" id="cell">
+                  <!-- 头像 -->
+                  <a href="#" class="user_avatar pull-left">
+                    <%if(info[i].img){ %>
+                    <img src="<%=info[i].img%>"/>  
+                    <%}%>
+                  </a>
+                  <!-- 访问与回复 -->
+                  <span class="count pull-left">
+                    <!-- 回复数 -->
+                    <span class="count_reply"><%=info[i].count_repl%></span> 
+                    /
+                    <!-- 访问量 -->
+                    <span class="count_visits"><%=info[i].count_visits%></span>
+                  </span>
+                  <!-- 访问时间 -->
+                  <a href="#" class="last_time pull_right">
+                    <img class="small_user_avtar" src="<%=info[i].img_small%>" />
+                    <span class="last_active_time"><%=info[i].time%></span>
+                  </a>
+                  <!-- 内容主体 -->
+                  <div class="topic_title_wrapper">
+                    <%if(info[i].rank=='置顶'||info[i].rank=='精华'){%>
+                    <span class="put_top"><%=info[i].rank%></span>
+                    <%}else{%>
+                    <span class="put_good"><%=info[i].rank%></span>
+                    <%}%>
+                    <a href="#" class="topic_title"><%=info[i].content%></a>
+                  </div>
+                </div>
+          <%}%>
+        </div>
+        <!-- 页码导航栏 -->
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <!-- 大于一页，则显示上一页翻页按钮 -->
+            <% if(page>1){ %> 
+            <li>
+              <a href="/<%=url%>?page=<%=page-1%>&limit=40" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+          <% } %> 
+          <!-- 显示前六页跳转按钮 -->
+            <% for(let i=0;i<totalPage;i++){ %>
+              <% if(i<=5){ %> 
+                <li><a href="/<%=url%>?page=<%=(i+1)%>&limit=40"><%=i+1 %></a></li>
+              <% } %>
+            <% } %>
+            <li><a href="#" id="getPage">...</a></li>
+            <!-- 小于等于总页数，则显示下一页按钮 -->
+            <% if(page<totalPage){ %> 
+            <li>
+              <a href="/<%=url%>?page=<%=page+1%>&limit=40" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          <% } %> 
+          </ul>
+          <!-- 显示总页数 -->
+          <br>
+          <ul class="pagination getPage" style="margin-top: -25px; display: none;">
+              <% for(let i=0;i<totalPage;i++){ %>
+                  <li><a href="/<%=url%>?page=<%=(i+1)%>&limit=40"><%=i+1 %></a></li>
+                <% } %>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <!-- 侧边栏 -->
+  <div class="sidebar">
+    <div class="sidebar-panel">
+      <div class="inner">
+        <p>CNode：Node.js专业中文社区</p>
+        <div>
+          您可以
+          <a href="/login">登录</a>
+          或
+          <a href="/register">注册</a>
+          ,也可以<br />
+          <a href="https://github.com/">
+            <span class="span-info">通过github登录</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar-panel">
+      <div class="inner">
+        <a
+          href="http://www.huodongxing.com/event/1521928757400"
+          target="_blank"
+          class="sidebar-img"
+        >
+          <img src="/public/img/side-panel-1.png" alt="" />
+        </a>
+        <a
+          href="https://www.aliyun.com/product/nodejs?ref=cnode"
+          target="_blank"
+          class="sidebar-img"
+        >
+          <img src="/public/img/side-panel-2.png" alt="" />
+        </a>
+        <a href="#" class="sidebar-img">
+          <img src="/public/img/side-panel-3.png" alt="" />
+        </a>
+      </div>
+    </div>
+    <div class="sidebar-panel">
+      <div class="header">
+        <span>无人回复的话题</span>
+      </div>
+      <div class="inner">
+        <ul class="unstyled">
+          <li><a href="#">麻烦大家,问一个关于tesseract.js的问题!!</a></li>
+          <li><a href="#">这次我上线了个导航站，欢迎使用</a></li>
+          <li>
+            <a href="#"
+              >求助: activemq中的topic,有时会丢失,消息接收端收不到消息</a
+            >
+          </li>
+          <li><a href="#">这样的15薪不知道有没有搞头？</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="sidebar-panel">
+      <div class="header">
+        <span>积分榜 TOP 100 >></span>
+      </div>
+      <div class="inner">
+        <ol class="unstyled">
+          <li>
+            <span class="top_score">21930</span
+            ><a class="user_name" href="#">i5ting</a>
+          </li>
+          <li>
+            <span class="top_score">15715</span
+            ><a class="user_name" href="#">alsotang</a>
+          </li>
+          <li>
+            <span class="top_score">9470</span
+            ><a class="user_name" href="#">atian25</a>
+          </li>
+          <li>
+            <span class="top_score">9350</span
+            ><a class="user_name" href="#">leapon</a>
+          </li>
+        </ol>
+      </div>
+    </div>
+    <div class="sidebar-panel">
+      <div class="header">
+        <span>友情社区</span>
+      </div>
+      <div class="inner">
+        <ul class="unstyled">
+          <li>
+            <a href="#" class="friend-community"
+              ><img src="/public/img/side-panel-4.png" alt=""
+            /></a>
+          </li>
+          <li>
+            <a href="#" class="friend-community"
+              ><img src="/public/img/side-panel-5.png" alt=""
+            /></a>
+          </li>
+          <li>
+            <a href="#" class="friend-community"
+              ><img src="/public/img/side-panel-6.png" alt=""
+            /></a>
+          </li>
+          <li>
+            <a href="#" class="friend-community"
+              ><img src="/public/img/side-panel-7.png" alt=""
+            /></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="sidebar-panel">
+      <div class="header">
+        <span>客户端二维码</span>
+      </div>
+      <div class="inner app-download">
+        <span class="code">
+          <img src="/public/img/side-panel-8.png" alt="" />
+        </span>
+        <a href="#">客户端源码地址</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="/node_modules/jquery/dist/jquery.js"></script>
+<script>
+  $('#getPage').click((e)=>{
+    e.preventDefault()
+    $('.getPage').fadeToggle();
+  })
+</script>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>注册</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/bootstrap/dist/css/bootstrap.css"
+    />
+    <link rel="stylesheet" href="/public/css/register.css" />
+  </head>
+  <body>
+    <form id="formR" class="form-register">
+      <p class="title">注册</p>
+      <div class="form-register-input">
+          <label for="name">用户名</label>
+          <input type="text" name="name" id="name" maxlength="12"/>
+        </div>
+        <div class="form-register-input">
+            <label for="avatar">头像</label>
+            <input type="file" name="avatar" id="avatar" />
+          </div>
+      <div class="form-register-input">
+        <label for="email">邮箱</label>
+        <input type="email" name="email" id="email" />
+      </div>
+      <div class="form-register-input">
+        <label for="password">密码</label>
+        <input
+          type="password"
+          name="password"
+          value=""
+          id="password"
+          maxlength="12"
+        />
+      </div>
+      <div class="form-register-input">
+        <label for="confirm">确认密码</label>
+        <input
+          type="password"
+          name="confirm"
+          value=""
+          id="confirm"
+          maxlength="12"
+        />
+      </div>
+      <p>赶紧去<a href="/login">登录</a>吧！返回<a href="/">主页</a></p>
+      <button type="submit" class="btn btn-primary btn-lg btn-block">
+        注册
+      </button>
+    </form>
+    <script src="/node_modules/jquery/dist/jquery.js"></script>
+    <script>
+      $('#formR').on('submit', function(e) {
+        e.preventDefault()
+        let form = new FormData($(this).get(0))
+        let formData = {
+          email: form.get('email'),
+          avatar: form.get('avatar').name,
+          name: form.get('name'),
+          password: form.get('password')
+        }
+        // console.log(form.get('avatar').name)
+        // console.log(formData.get('email'))
+        if (
+          $('#email').val() == '' ||
+          $('#password').val() == '' ||
+          $('#confirm').val() == '' ||
+          $('#avatar').val() == ''
+        ) {
+          window.alert('不能为空')
+        } else if ($('#password').val() != $('#confirm').val()) {
+          window.alert('两次输入的密码不一致')
+        } else {
+          $.ajax({
+            url: '/register',
+            type: 'post',
+            data: formData,
+            dataType: 'json',
+            success: function(result) {
+              if(result.err_code == 500) {
+                window.alert(result.message)
+              } else if(result.err_code == 1) {
+                window.alert(result.message)
+              } else {
+                window.alert('注册成功')
+                window.location.href = '/'
+              }
+            }
+          })
+        }
+      })
+    </script>
+  </body>
+</html>
