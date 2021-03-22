@@ -206,6 +206,7 @@ router.post('/login', (req, res) => {
           message: '您输入的账号有误，请重新输入！'
         })
       } else {
+        // console.log(data)
         req.session.user = data[0]
         res.status(200).json({
           err_code: 0,
@@ -222,12 +223,13 @@ router.get('/register', (req, res) => {
 
 router.post('/register', (req, res) => {
   let params = req.body
+  // console.log(params)
   db.query(
     'select * from user_info where email= ?',
     [params.email],
     (err, data) => {
+      // console.log(err)
       if (err) {
-        // console.log(1)
         return res.status(500).json({
           err_code: 500,
           message: 'Server Error'
@@ -245,18 +247,20 @@ router.post('/register', (req, res) => {
       let password = cipher.update(params.password, 'utf8', 'hex') // 编码方式从 utf8 转为 hex
       password += cipher.final('hex')
       params.avatar = url + params.avatar
+      // console.log(params)
       db.query(
         'insert into user_info values(?,?,?,?)',
         [params.email, password, params.name, params.avatar],
         (err, data) => {
           if (err) {
-            // console.log(4)
+            console.log(err)
             return res.status(500).json({
               err_code: 500,
               message: 'Server Error'
             })
           } else {
             // console.log(5)
+            params.password = password
             req.session.user = params
             res.status(200).json({
               err_code: 0,
@@ -275,8 +279,8 @@ router.get('/logout', (req, res) => {
 })
 
 router.get('/userinfo', (req, res) => {
-  // console.log(req.session.user)
   let params = req.session.user
+  // console.log(params)
   let decipher = crypto.createDecipher('aes192', secretkey)
   let password = decipher.update(params.password, 'hex', 'utf8')
   password += decipher.final('utf8')

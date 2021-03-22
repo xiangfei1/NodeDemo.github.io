@@ -85,9 +85,12 @@
               } else if(result.err_code == 1) {
                 window.alert(result.message)
               } else {
-                window.alert('注册成功')
+                window.alert(result.message)
                 window.location.href = '/'
               }
+            },
+            error: function(e) {
+              console.log(e)
             }
           })
         }
